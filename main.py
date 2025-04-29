@@ -8,6 +8,15 @@ app = FastAPI()
 def read_root():
     return "Bem-vindo à API! Tudo funcionando por aqui! 🚀"
 
+@app.get("/testdb")
+def test_db_connection():
+    try:
+        with engine.connect() as conn:
+            result = conn.execute(text("SELECT 1"))
+            return {"success": True, "result": result.scalar()}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
 @app.get("/generate-deck", response_class=Response)
 def generate_deck():
     mode = random.choice([1, 2, 3])
