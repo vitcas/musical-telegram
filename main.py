@@ -4,6 +4,10 @@ import kai
 
 app = FastAPI()
 
+@app.get("/", response_model=str)
+def read_root():
+    return "Bem-vindo à API! Tudo funcionando por aqui! 🚀"
+
 @app.get("/generate-deck", response_class=Response)
 def generate_deck():
     mode = random.choice([1, 2, 3])
