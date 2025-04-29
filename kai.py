@@ -31,7 +31,7 @@ def among_us(mst_data):
 
 def build_query(arc_id, races_elms, frames):
     preq = """
-        SELECT cv.konami_id, cv.type as mst, cv.is_extra 
+        SELECT cv.ydk_id, cv.konami_id, cv.type as mst, cv.is_extra 
         FROM cards_view cv
         INNER JOIN cards_sups cs ON cv.konami_id = cs.konami_id
     """
@@ -121,7 +121,7 @@ def gimme_cards(custom_query):
 
 def gimme_extra():
     query = """
-        SELECT cv.konami_id, cv.type as mst, cv.is_extra 
+        SELECT cv.ydk_id, cv.konami_id, cv.type as mst, cv.is_extra 
         FROM cards_view cv
         INNER JOIN cards_sups cs ON cv.konami_id = cs.konami_id
         WHERE frame_id = 10 AND elm_id IS NULL AND cs.race_code IS NULL AND is_extra = 1
@@ -130,7 +130,7 @@ def gimme_extra():
     return extra_cards   
 
 def gimme_staples():
-    query = "SELECT konami_id, type as mst, is_extra FROM cards_view WHERE arc_id = 473"
+    query = "SELECT cv.ydk_id, konami_id, type as mst, is_extra FROM cards_view WHERE arc_id = 473"
     staples = gimme_cards(query)
     return staples
 
@@ -208,13 +208,13 @@ def archetype_mode():
         arc_result = session.execute(text("SELECT id, name FROM archetypes ORDER BY RANDOM() LIMIT 1")).fetchone()
         arc_id, name = arc_result       
         # Consulta para pegar as cartas associadas ao arquétipo
-        query = f"SELECT konami_id, type, is_extra FROM cards_view WHERE arc_id = {arc_id}"
+        query = f"SELECT cv.ydk_id, konami_id, type, is_extra FROM cards_view WHERE arc_id = {arc_id}"
         cards = gimme_cards(query)  
     madeck, exdeck = fill_deck(cards, arc_id)
     return madeck, exdeck, name
 
 def arc_forced(acid, name):
-    query = f"SELECT konami_id, type, is_extra FROM cards_view WHERE arc_id = :arc_id"
+    query = f"SELECT cv.ydk_id, konami_id, type, is_extra FROM cards_view WHERE arc_id = :arc_id"
     cards = gimme_cards(query, {"arc_id": acid})  # Passando o parâmetro arc_id
     madeck, exdeck = fill_deck(cards, acid)
     return madeck, exdeck, name
@@ -227,7 +227,7 @@ def element_mode():
         element = random.choice(result)
         attr_id, attr_name = element 
         preq = """
-            SELECT cv.konami_id, cv.type, cv.is_extra 
+            SELECT cv.ydk_id, cv.konami_id, cv.type, cv.is_extra 
             FROM cards_view cv
             INNER JOIN cards_sups cs ON cv.konami_id = cs.konami_id
         """
@@ -244,7 +244,7 @@ def race_mode():
             return {'error': 'Nenhuma raça encontrada'}  
         race_id, race_name = result
         preq = """
-            SELECT cv.konami_id, cv.type, cv.is_extra 
+            SELECT cv.ydk_id, cv.konami_id, cv.type, cv.is_extra 
             FROM cards_view cv
             INNER JOIN cards_sups cs ON cv.konami_id = cs.konami_id
         """
