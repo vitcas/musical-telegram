@@ -145,13 +145,13 @@ def its_over(cquery=""):
 
 def split_card_types(cards):
     main, extra, spells, traps = [], [], [], []
-    for konami_id, mst, is_extra in cards:
+    for ydk_id, konami_id, mst, is_extra in cards:
         if "monster" in mst:
-            (extra if int(is_extra) > 0 else main).append((konami_id))
+            (extra if int(is_extra) > 0 else main).append((ydk_id))
         elif "spell" in mst:
-            spells.append((konami_id))
+            spells.append((ydk_id))
         elif "trap" in mst:
-            traps.append((konami_id))
+            traps.append((ydk_id))
     return main, extra, spells, traps
 
 def fill_section(target, needed, pool):
