@@ -1,12 +1,12 @@
 import os
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 
-load_dotenv()  # Carrega variáveis do arquivo .env
+#load_dotenv()  # Carrega variáveis do arquivo .env
 
-USER = os.getenv("USER")
-PASSWORD = os.getenv("PASSWORD")
-HOST = os.getenv("HOST")
-PORT = os.getenv("PORT")
-DBNAME = os.getenv("DBNAME")
+USER = os.environ.get("USER")
+PASSWORD = os.environ.get("PASSWORD")
+HOST = os.environ.get("HOST")
+PORT = os.environ.get("PORT")
+DBNAME = os.environ.get("DBNAME")
 
 DATABASE_URL = f"postgresql://{USER}:{PASSWORD}@{HOST}:{PORT}/{DBNAME}?sslmode=require"
