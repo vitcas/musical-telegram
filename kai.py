@@ -208,13 +208,13 @@ def archetype_mode():
         arc_result = session.execute(text("SELECT id, name FROM archetypes ORDER BY RANDOM() LIMIT 1")).fetchone()
         arc_id, name = arc_result       
         # Consulta para pegar as cartas associadas ao arquétipo
-        query = f"SELECT cv.ydk_id, konami_id, type, is_extra FROM cards_view WHERE arc_id = {arc_id}"
+        query = f"SELECT ydk_id, konami_id, type, is_extra FROM cards_view WHERE arc_id = {arc_id}"
         cards = gimme_cards(query)  
     madeck, exdeck = fill_deck(cards, arc_id)
     return madeck, exdeck, name
 
 def arc_forced(acid, name):
-    query = f"SELECT cv.ydk_id, konami_id, type, is_extra FROM cards_view WHERE arc_id = :arc_id"
+    query = f"SELECT ydk_id, konami_id, type, is_extra FROM cards_view WHERE arc_id = :arc_id"
     cards = gimme_cards(query, {"arc_id": acid})  # Passando o parâmetro arc_id
     madeck, exdeck = fill_deck(cards, acid)
     return madeck, exdeck, name
