@@ -1,8 +1,12 @@
 from fastapi import FastAPI, Response
 import random
 import kai
+from sqlalchemy import create_engine, text
+from database import DATABASE_URL  # importa do seu database.py
 
 app = FastAPI()
+
+engine = create_engine(DATABASE_URL)
 
 @app.get("/", response_model=str)
 def read_root():
