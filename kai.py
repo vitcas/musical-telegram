@@ -130,7 +130,7 @@ def gimme_extra():
     return extra_cards   
 
 def gimme_staples():
-    query = "SELECT cv.ydk_id, konami_id, type as mst, is_extra FROM cards_view WHERE arc_id = 473"
+    query = "SELECT ydk_id, konami_id, type as mst, is_extra FROM cards_view WHERE arc_id = 473"
     staples = gimme_cards(query)
     return staples
 
